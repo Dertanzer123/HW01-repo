@@ -22,7 +22,25 @@ public class linkedlist {
 			temp1.setLink(newnode);
 		}
 	}
-
+	public int search(Object data)
+	{
+		node temp=head;
+		int index=0;
+		while(temp!=null) 
+		{
+			if(temp.getData().equals(data)) 
+			{
+				return index;
+			}
+			temp=temp.getLink();
+			index++;
+		}
+		return -1;
+		
+		
+	}
+	
+	
 	public boolean discardelement(int index) {
 
 		if (head == null) {
@@ -77,11 +95,6 @@ public class linkedlist {
 		}
 		
 	}
-	// public boolean discardelement(Object data)
-	// {
-	//
-	// }
-
 	public int size() {
 		int size = 0;
 		node temp = head;
