@@ -36,16 +36,27 @@ public class game {
 		computerlist = new linkedlist();
 		tablelist = new linkedlist();
 		int card;
-		int[] cards = new int[6];
+		linkedlist cards = new linkedlist();
 		for (int i = 0; i < 6; i++) {
-			cards[i] = 0;
+			cards .add(0);
 		}
 
+		System.out.println("can i take your name");
+		System.out.print("  :");
+		playername= scanner.next();
+		while(playername==null||playername.equals("")||playername.trim().equals("")||playername.trim().equals(null))
+		{
+			System.out.println("you should enter something valid for your name");
+			System.out.print("  :");
+			playername=scanner.next().trim();
+		}
+		
 		for (int i = 0; i < 24; i++) {
 			while (true) {
 				card = rnd.nextInt(6) + 1;
-				if (cards[card - 1] < 4) {
-					cards[card - 1]++;
+				if ((int)(cards.getelement(card-1)) < 4) 
+				{
+					cards.setelement(card-1,(int)cards.getelement(card-1)+1 ); 
 					tablelist.add(card);
 					break;
 				}
@@ -70,7 +81,8 @@ public class game {
 			turnnumber++;
 		}
 		if (compbook < playerbook) {
-			System.out.println(playername+" won wow thats fantastic");
+			System.out.println(playername+" won wow thats fantastic i'll write your name in my list");
+			
 		} else if (compbook == playerbook) {
 			System.out.println("that was a good game its stealmate");
 		} else {
@@ -100,10 +112,10 @@ public class game {
 
 	{
 		System.out.println("Turn : " + turnnumber + "                          Table");
-		System.out.print("YoU      : ");
+		System.out.print(playername+" : ");
 		playerlist.display();
-		System.out.println("book : " + playerbook);
-		System.out.print("                                    ");
+		System.out.println("             book : " + playerbook);
+		System.out.print("                                             ");
 
 		// displaylowintel(tablelist.size(), '%');
 		tablelist.display();
@@ -114,21 +126,28 @@ public class game {
 		// displaylowintel(computerlist.size(), '#');
 		computerlist.display();
 
-		System.out.println("book : " + compbook);
+		System.out.println("             book : " + compbook);
 		if (flag1)// when flag1 is true then it mean players turn else it means computers turn
 		{
-			System.out.println("you should chose an card");
-			input = Integer.parseInt(scanner.next());
+			
+			
+			do {
+				System.out.println("you should chose an card that you have in your hand");
+				input = Integer.parseInt(scanner.next());	
+			}
+			while(playerlist.search(input)==-1);
 			System.out.println("you chosed : " + input);
 			if (computerlist.search(input) != -1) {
 				while (computerlist.search(input) != -1) {
 					playerlist.add(input);
 					computerlist.discardelement(computerlist.search(input));
 				}
+				
 			} else {
 				System.out.println("you go fish");
 				System.out.println("you got " + drawcard(true));
 				flag1 = false;
+				Thread.sleep(500);
 			}
 
 			for (int i = 1; i < 7; i++) {
@@ -138,12 +157,20 @@ public class game {
 					}
 					System.out.println("Book baby " + i + " " + i + " " + i + " " + i);
 					playerbook++;
+					Thread.sleep(500);
 				}
 			}
 
 		} else {
+			
+			
+			do {
 			input = rnd.nextInt(6) + 1;
-
+			}while(computerlist.search(input)==-1); 
+			
+				
+			
+			
 			System.out.println(compname + " chooses : " + input);
 			Thread.sleep(1000);
 			if (playerlist.search(input) != -1) {

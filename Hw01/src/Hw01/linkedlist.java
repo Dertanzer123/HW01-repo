@@ -40,7 +40,18 @@ public class linkedlist {
 		
 	}
 	
-	
+	public void setelement(int index,Object data) 
+	{
+		node temp=head;
+		
+		while(temp!=null&&index>0)
+		{
+			index--;
+			temp=temp.getLink();
+		}
+		
+		temp.setData(data);
+	}
 	public boolean discardelement(int index) {
 
 		if (head == null) {
