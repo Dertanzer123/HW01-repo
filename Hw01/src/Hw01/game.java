@@ -1,5 +1,6 @@
 package Hw01;
 
+import java.awt.print.Book;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,17 +15,23 @@ public class game {
 
 	Scanner scanner = new Scanner(System.in);
 
-
 	int input;
-	
+	int playerbook;
+	int compbook;
 
 	boolean flag1;
 
 	String compname;
+	String playername;
+	
 	
 	game() throws InterruptedException {
 
-		compname="Bob";
+		compname = "Bob";
+
+		compbook = 0;
+		playerbook = 0;
+
 		playerlist = new linkedlist();
 		computerlist = new linkedlist();
 		tablelist = new linkedlist();
@@ -57,8 +64,17 @@ public class game {
 
 		while (true) {
 			display();
-
+			if (computerlist.size() == 0 || playerlist.size() == 0) {
+				break;
+			}
 			turnnumber++;
+		}
+		if (compbook < playerbook) {
+			System.out.println(playername+" won wow thats fantastic");
+		} else if (compbook == playerbook) {
+			System.out.println("that was a good game its stealmate");
+		} else {
+			System.out.println("sorry dude but our good old "+compname+" is better than you");
 		}
 
 	}
@@ -86,63 +102,75 @@ public class game {
 		System.out.println("Turn : " + turnnumber + "                          Table");
 		System.out.print("YoU      : ");
 		playerlist.display();
-		System.out.println();
+		System.out.println("book : " + playerbook);
 		System.out.print("                                    ");
 
 		// displaylowintel(tablelist.size(), '%');
 		tablelist.display();
 
 		System.out.println();
-		System.out.print(compname+"    : ");
+		System.out.print(compname + "    : ");
 
 		// displaylowintel(computerlist.size(), '#');
 		computerlist.display();
 
-		System.out.println();
-		if(flag1)//when flag1 is true then it mean players turn else it means computers turn
+		System.out.println("book : " + compbook);
+		if (flag1)// when flag1 is true then it mean players turn else it means computers turn
 		{
-		System.out.println("you should chose an card");
-		input =Integer.parseInt(scanner.next()) ;
-		System.out.println("you chosed : " + input);
-		if (computerlist.search(input) != -1) {
-			while (computerlist.search(input) != -1) {
-				playerlist.add(input);
-				computerlist.discardelement(computerlist.search(input));
+			System.out.println("you should chose an card");
+			input = Integer.parseInt(scanner.next());
+			System.out.println("you chosed : " + input);
+			if (computerlist.search(input) != -1) {
+				while (computerlist.search(input) != -1) {
+					playerlist.add(input);
+					computerlist.discardelement(computerlist.search(input));
+				}
+			} else {
+				System.out.println("you go fish");
+				System.out.println("you got " + drawcard(true));
+				flag1 = false;
 			}
+
+			for (int i = 1; i < 7; i++) {
+				if (playerlist.checkbook(i, 4)) {
+					while (playerlist.search(i) != -1) {
+						playerlist.discardelement(playerlist.search(i));
+					}
+					System.out.println("Book baby " + i + " " + i + " " + i + " " + i);
+					playerbook++;
+				}
+			}
+
 		} else {
-			System.out.println("you go fish");
-			System.out.println("you got " + drawcard(true));
-			flag1=false;
-		}
-		}
-		else 
-		{
-			input =rnd.nextInt(6)+1;
-			
-			System.out.println(compname+" chooses : "+input);
+			input = rnd.nextInt(6) + 1;
+
+			System.out.println(compname + " chooses : " + input);
 			Thread.sleep(1000);
-			if(playerlist.search(input)!=-1) 
-			{
+			if (playerlist.search(input) != -1) {
 				System.out.println("you gotta give them");
 				Thread.sleep(500);
-				while(playerlist.search(input)!=-1) 
-				{
+				while (playerlist.search(input) != -1) {
 					computerlist.add(input);
 					playerlist.discardelement(playerlist.search(input));
 				}
-			}
-			else 
-			{
-				System.out.println(compname+" goes fish");
-				if(input==drawcard(false)) 
-				{
-					System.out.println(compname+" got "+input);
+			} else {
+				System.out.println(compname + " goes fish");
+				if (input == drawcard(false)) {
+					System.out.println(compname + " got " + input);
 				}
-				flag1=true;
-				
+				flag1 = true;
+
 			}
-			
-			
+			for (int i = 1; i < 7; i++) {
+				if (computerlist.checkbook(i, 4)) {
+					while (computerlist.search(i) != -1) {
+						computerlist.discardelement(computerlist.search(i));
+					}
+					System.out.println(compname + " make an " + i + " " + i + " " + i + " " + i);
+					compbook++;
+				}
+			}
+
 		}
 		System.out.println("---------------------------------");
 

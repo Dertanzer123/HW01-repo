@@ -95,6 +95,26 @@ public class linkedlist {
 		}
 		
 	}
+	public boolean checkbook(Object data,int size)
+	{
+		node temp1= head;
+		int count=0;
+		while(temp1!=null)
+		{
+			if(temp1.getData().equals(data))
+			{
+				count++;
+			}
+			temp1=temp1.getLink();
+			
+		}
+		if (count==size)
+		{
+			return true;
+		}
+		return false;
+		
+	}
 	public int size() {
 		int size = 0;
 		node temp = head;
