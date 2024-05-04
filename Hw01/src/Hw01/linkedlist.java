@@ -13,45 +13,52 @@ public class linkedlist {
 
 			head = new node(data);
 		} else {
-			node temp1 = head;
 
-			while (temp1.getLink() != null) {
-				temp1 = temp1.getLink();
+			if ((int) data > (int) (head.getData())) {
+				node newnode = new node(data);
+				newnode.setLink(head);
+				head=newnode;
+				
+
+			} else {
+
+				node temp1 = head;
+
+				while (temp1.getLink() != null && (int) data <= (int) (temp1.getLink().getData())) {
+					temp1 = temp1.getLink();
+				}
+				node newnode = new node(data);
+				newnode.setLink(temp1.getLink());
+				temp1.setLink(newnode);
 			}
-			node newnode = new node(data);
-			temp1.setLink(newnode);
 		}
 	}
-	public int search(Object data)
-	{
-		node temp=head;
-		int index=0;
-		while(temp!=null) 
-		{
-			if(temp.getData().equals(data)) 
-			{
+
+	public int search(Object data) {
+		node temp = head;
+		int index = 0;
+		while (temp != null) {
+			if (temp.getData().equals(data)) {
 				return index;
 			}
-			temp=temp.getLink();
+			temp = temp.getLink();
 			index++;
 		}
 		return -1;
-		
-		
+
 	}
-	
-	public void setelement(int index,Object data) 
-	{
-		node temp=head;
-		
-		while(temp!=null&&index>0)
-		{
+
+	public void setelement(int index, Object data) {
+		node temp = head;
+
+		while (temp != null && index > 0) {
 			index--;
-			temp=temp.getLink();
+			temp = temp.getLink();
 		}
-		
+
 		temp.setData(data);
 	}
+
 	public boolean discardelement(int index) {
 
 		if (head == null) {
@@ -79,9 +86,9 @@ public class linkedlist {
 		}
 		return true;
 	}
-	public Object getelement(int index)
-	{
-		node temp=head;
+
+	public Object getelement(int index) {
+		node temp = head;
 		for (int i = 0; i < index; i++) {
 			if (temp == null) {
 				System.out.println("index is out of bounds");
@@ -95,37 +102,35 @@ public class linkedlist {
 		}
 		return temp.getData();
 	}
+
 	public void display()
-	
+
 	{
-		node temp=head;
-		while(temp!=null)
-		{
-			System.out.print(temp.getData()+" ");
-			temp=temp.getLink();
+		node temp = head;
+		while (temp != null) {
+			System.out.print(temp.getData() + " ");
+			temp = temp.getLink();
 		}
-		
+
 	}
-	public boolean checkbook(Object data,int size)
-	{
-		node temp1= head;
-		int count=0;
-		while(temp1!=null)
-		{
-			if(temp1.getData().equals(data))
-			{
+
+	public boolean checkbook(Object data, int size) {
+		node temp1 = head;
+		int count = 0;
+		while (temp1 != null) {
+			if (temp1.getData().equals(data)) {
 				count++;
 			}
-			temp1=temp1.getLink();
-			
+			temp1 = temp1.getLink();
+
 		}
-		if (count==size)
-		{
+		if (count == size) {
 			return true;
 		}
 		return false;
-		
+
 	}
+
 	public int size() {
 		int size = 0;
 		node temp = head;

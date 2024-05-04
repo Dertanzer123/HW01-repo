@@ -178,14 +178,14 @@ public class game {
 		System.out.println("             book : " + playerbook);
 		System.out.print("                                             ");
 
-		// displaylowintel(tablelist.size(), '%');
-		tablelist.display();
+		 displaylowintel(tablelist.size(), '%');//(1)these for hiding computers and table cards if you want to see them you should  comment (1)'s and free(2)'s
+		//tablelist.display();//(2)
 
 		System.out.println();
 		System.out.print(compname + "    : ");
 
-		// displaylowintel(computerlist.size(), '#');
-		computerlist.display();
+		 displaylowintel(computerlist.size(), '#');//(1)
+		//computerlist.display();//(2)
 
 		System.out.println("             book : " + compbook);
 		if (flag1)// when flag1 is true then it mean players turn else it means computers turn
