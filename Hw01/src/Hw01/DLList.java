@@ -17,29 +17,77 @@ public class DLList {
 			head = newnode;
 			tail = newnode;
 		} else {
-			DLNode temp1 = head;
-			while (temp1.getNext() != null && temp1.getScore() > score) {
-				temp1 = temp1.getNext();
+			
+
+			if(score<head.getScore()) 
+			{
+				newnode.setNext(head);
+				head.setPrevious(newnode);
+				head=newnode;
 			}
-			if (temp1.getScore() > score)// means tail
+			else 
+			{DLNode temp1 = head;
+			
+			while(temp1.getNext()!=null&&score>temp1.getNext().getScore())
 			{
-				temp1.setNext(newnode);
-				newnode.setPrevious(temp1);
-				tail = newnode;
-			} else // means in between
-			{
-				if (temp1.getNext() != null) {
+				temp1=temp1.getNext();
+			}
+			newnode.setPrevious(temp1);
+			newnode.setNext(temp1.getNext());
+				if(temp1.getNext()==null) 
+				{
+					tail=newnode;
+				}
+				else 
+				{
 					temp1.getNext().setPrevious(newnode);
-					newnode.setNext(temp1.getNext());
 				}
 				temp1.setNext(newnode);
-				newnode.setPrevious(temp1);
-			
+				
 			}
-
 		}
 
 	}
-	
+
+	public DLNode getHead() {
+		return head;
+	}
+
+	public void setHead(DLNode head) {
+		this.head = head;
+	}
+
+	public DLNode getTail() {
+		return tail;
+	}
+
+	public void setTail(DLNode tail) {
+		this.tail = tail;
+	}
+
+	public void discardExtras() {
+		DLNode temp = head;
+		for (int i = 0; i < 9; i++) {
+
+			if (temp == null) {
+				break;
+			}
+			temp = temp.getNext();
+		}
+		if (temp != null && temp.getNext() != null) {
+			temp.setNext(null);
+			tail = temp;
+		}
+	}
+
+	public void display() {
+		DLNode temp = head;
+
+		while (temp != null) {
+			System.out.println(temp.getName() + " " + temp.getScore());
+			temp = temp.getNext();
+		}
+
+	}
 
 }
